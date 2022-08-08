@@ -35,7 +35,7 @@ const RestaurantPagination = () => {
 
   const pageCount = useMemo(
     () => Math.ceil(restaurantCount / pageSize),
-    [page]
+    [page, restaurantCount, pageSize]
   );
 
   const handlePaginationChange = (event, newPage) => {

@@ -57,7 +57,7 @@ const SearchBox = () => {
     } = await apolloClient.query({
       query: SEARCH_RESTAURANTS,
       variables: { searchTerm: searchText, page: newPage * pageSize, pageSize },
-      fetchPolicy: "network-only",
+      fetchPolicy: "no-cache",
     });
 
     dispatch(

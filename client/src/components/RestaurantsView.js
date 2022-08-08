@@ -51,7 +51,7 @@ const RestaurantsView = () => {
     } = await apolloClient.query({
       query: GET_RESTAURANTS,
       variables: { page, pageSize },
-      fetchPolicy: "network-only",
+      fetchPolicy: "no-cache",
     });
 
     dispatch(
