@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 
 import { makeStyles } from "@mui/styles";
 import { IconButton, Paper, Typography } from "@mui/material";
@@ -88,4 +88,4 @@ const RestaurantBox = ({ restaurant, onDelete, onEdit }) => {
   );
 };
 
-export default RestaurantBox;
+export default memo(RestaurantBox);

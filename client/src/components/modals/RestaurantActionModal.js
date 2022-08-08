@@ -12,10 +12,11 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import OutlinedInput from "@mui/material/OutlinedInput";
+import TextField from "@mui/material/TextField";
 
 import { CREATE_RESTAURANT, UPDATE_RESTAURANT } from "../database/mutations";
 import { setState } from "../store/restaurantStore";
+import { EMAIL_REGEX } from "../types/constants";
 
 const useStyles = makeStyles({
   root: {
@@ -36,7 +37,7 @@ const useStyles = makeStyles({
     width: "44px !important",
   },
   field: {
-    marginTop: "10px",
+    marginTop: "10px !important",
   },
   actionsContent: {
     display: "flex",
@@ -54,6 +55,41 @@ const FIELDS_CONFIG = [
   { name: "phone", label: "Phone" },
 ];
 
+const DETAILS_FORM_STATE = {
+  name: "",
+  address: "",
+  email: "",
+  phone: "",
+};
+
+const validateForm = (form) => {
+  let errors = {};
+
+  for (const propertyName of Object.keys(form)) {
+    if (
+      propertyName !== "id" &&
+      (!form[propertyName] || form[propertyName]?.trim() === "")
+    ) {
+      errors = { ...errors, [propertyName]: "This field is mandatory." };
+      continue;
+    }
+
+    switch (propertyName) {
+      case "email":
+        if (!EMAIL_REGEX.test(form[propertyName])) {
+          errors = {
+            ...errors,
+            [propertyName]: "Please provide a valid email address.",
+          };
+        }
+        break;
+      default:
+    }
+  }
+
+  return Object.keys(errors).length > 0 ? errors : null;
+};
+
 // Restaurant received for edit mode
 const RestaurantActionModal = ({ isOpen, onClose, restaurant }) => {
   const classes = useStyles();
@@ -61,25 +97,28 @@ const RestaurantActionModal = ({ isOpen, onClose, restaurant }) => {
   const apolloClient = useApolloClient();
 
   const [isOperationInProgress, setOperationInProgress] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    address: "",
-    email: "",
-    phone: "",
-  });
+  const [formData, setFormData] = useState(DETAILS_FORM_STATE);
+  const [formErrors, setFormErrors] = useState(DETAILS_FORM_STATE);
 
   useEffect(() => {
-    if (restaurant) {
-      // Is edit mode
-      setFormData(restaurant);
+    // ResetState
+    if (isOpen) {
+      setFormData(restaurant || DETAILS_FORM_STATE);
+      setFormErrors(DETAILS_FORM_STATE);
     }
-  }, [restaurant]);
+  }, [isOpen]);
 
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
   const handleCreate = () => {
+    const formValidationErrors = validateForm(formData);
+    if (formValidationErrors) {
+      setFormErrors(formValidationErrors);
+      return;
+    }
+
     setOperationInProgress(true);
 
     apolloClient
@@ -104,13 +143,15 @@ const RestaurantActionModal = ({ isOpen, onClose, restaurant }) => {
         <DialogTitle>{restaurant ? "Edit" : "Add"} restaurant</DialogTitle>
         <DialogContent className={classes.root}>
           {FIELDS_CONFIG.map((fieldConfig) => (
-            <OutlinedInput
+            <TextField
               className={classes.field}
               key={fieldConfig.name}
               name={fieldConfig.name}
               value={formData[fieldConfig.name] || ""}
               onChange={handleChange}
               placeholder={fieldConfig.label}
+              error={!!formErrors[fieldConfig.name]}
+              helperText={formErrors[fieldConfig.name]}
             />
           ))}
         </DialogContent>
