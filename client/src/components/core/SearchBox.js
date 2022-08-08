@@ -1,14 +1,34 @@
 import React, { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import { makeStyles } from "@mui/styles";
 import { useApolloClient } from "@apollo/client";
-import { IconButton, OutlinedInput } from "@mui/material";
+import { IconButton, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
 import { SEARCH_RESTAURANTS } from "../database/queries";
 import { setState } from "../store/restaurantStore";
 
+const useStyles = makeStyles({
+  root: {
+    display: "flex",
+    flexDirection: "row",
+    width: "100%",
+    alignItems: "center",
+  },
+  searchButton: {
+    color: "white !important",
+    backgroundColor: "#4c54ee",
+    padding: "10px",
+    width: "88px !important",
+  },
+  searchBox: {
+    flex: 1,
+  },
+});
+
 const SearchBox = () => {
+  const classes = useStyles();
   const dispatch = useDispatch();
   const apolloClient = useApolloClient();
 
@@ -54,11 +74,13 @@ const SearchBox = () => {
   }, [page]);
 
   return (
-    <div>
-      <OutlinedInput
+    <div className={classes.root}>
+      <TextField
+        variant="outlined"
         value={searchTerm}
         onChange={onChange}
         disabled={isTableLoading}
+        className={classes.searchBox}
       />
 
       <IconButton
@@ -66,7 +88,7 @@ const SearchBox = () => {
         variant="contained"
         disabled={isTableLoading}
       >
-        <SearchIcon />
+        <SearchIcon className={classes.searchButton} />
       </IconButton>
     </div>
   );

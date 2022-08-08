@@ -3,16 +3,49 @@ import { useDispatch } from "react-redux";
 import { useApolloClient } from "@apollo/client";
 
 import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
+import CheckIcon from "@mui/icons-material/Check";
+import ClearIcon from "@mui/icons-material/Clear";
 
+import { makeStyles } from "@mui/styles";
 import IconButton from "@mui/material/IconButton";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import OutlinedInput from "@mui/material/OutlinedInput";
+
 import { CREATE_RESTAURANT, UPDATE_RESTAURANT } from "../database/mutations";
 import { setState } from "../store/restaurantStore";
+
+const useStyles = makeStyles({
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    width: "450px",
+  },
+  confirmActionBtn: {
+    color: "white !important",
+    backgroundColor: "#4c54ee",
+    padding: "10px",
+    width: "88px !important",
+  },
+  clearActionBtn: {
+    color: "black !important",
+    backgroundColor: "#f3f4f5",
+    padding: "10px",
+    width: "44px !important",
+  },
+  field: {
+    marginTop: "10px",
+  },
+  actionsContent: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    width: "100%",
+    paddingLeft: "10px",
+  },
+});
 
 const FIELDS_CONFIG = [
   { name: "name", label: "Name" },
@@ -23,6 +56,7 @@ const FIELDS_CONFIG = [
 
 // Restaurant received for edit mode
 const RestaurantActionModal = ({ isOpen, onClose, restaurant }) => {
+  const classes = useStyles();
   const dispatch = useDispatch();
   const apolloClient = useApolloClient();
 
@@ -68,9 +102,10 @@ const RestaurantActionModal = ({ isOpen, onClose, restaurant }) => {
     <>
       <Dialog open={isOpen} onClose={() => onClose()}>
         <DialogTitle>{restaurant ? "Edit" : "Add"} restaurant</DialogTitle>
-        <DialogContent>
+        <DialogContent className={classes.root}>
           {FIELDS_CONFIG.map((fieldConfig) => (
             <OutlinedInput
+              className={classes.field}
               key={fieldConfig.name}
               name={fieldConfig.name}
               value={formData[fieldConfig.name] || ""}
@@ -81,15 +116,22 @@ const RestaurantActionModal = ({ isOpen, onClose, restaurant }) => {
         </DialogContent>
 
         <DialogActions>
-          <IconButton
-            onClick={() => onClose()}
-            disabled={isOperationInProgress}
-          >
-            <RemoveIcon />
-          </IconButton>
-          <IconButton onClick={handleCreate} disabled={isOperationInProgress}>
-            <AddIcon />
-          </IconButton>
+          <div className={classes.actionsContent}>
+            <IconButton onClick={handleCreate} disabled={isOperationInProgress}>
+              {restaurant ? (
+                <CheckIcon className={classes.confirmActionBtn} />
+              ) : (
+                <AddIcon className={classes.confirmActionBtn} />
+              )}
+            </IconButton>
+
+            <IconButton
+              onClick={() => onClose()}
+              disabled={isOperationInProgress}
+            >
+              <ClearIcon className={classes.clearActionBtn} />
+            </IconButton>
+          </div>
         </DialogActions>
       </Dialog>
     </>

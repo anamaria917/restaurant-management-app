@@ -22,7 +22,7 @@ const useStyles = makeStyles({
     height: "100%",
   },
   gridContent: {
-    maxWidth: "300px",
+    maxWidth: "50%",
   },
 });
 

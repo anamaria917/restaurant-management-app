@@ -1,13 +1,31 @@
 import React, { memo, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import { makeStyles } from "@mui/styles";
 import AddIcon from "@mui/icons-material/Add";
 import { IconButton, Pagination } from "@mui/material";
 
 import RestaurantActionModal from "./modals/RestaurantActionModal";
 import { setState } from "./store/restaurantStore";
 
+const useStyles = makeStyles({
+  root: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%",
+    height: "100%",
+  },
+  actionButton: {
+    color: "white !important",
+    backgroundColor: "#4c54ee",
+    padding: "10px",
+  },
+});
+
 const RestaurantPagination = () => {
+  const classes = useStyles();
   const dispatch = useDispatch();
 
   const { page, pageSize, restaurantCount } = useSelector(
@@ -25,9 +43,9 @@ const RestaurantPagination = () => {
   };
 
   return (
-    <div>
+    <div className={classes.root}>
       <IconButton onClick={() => setIsOpen(true)}>
-        <AddIcon />
+        <AddIcon className={classes.actionButton} />
       </IconButton>
 
       <Pagination

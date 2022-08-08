@@ -19,6 +19,10 @@ code {
     monospace;
 }
 
+p {
+  letter-spacing: 1pt !important;
+}
+
 #root {
   width: 100%;
   height: 100%;
