@@ -22,19 +22,23 @@ const SearchBox = () => {
     setSearch(event.target.value);
   };
 
-  const onFilterApply = async () => {
+  const onFilterApply = async (newPage = page) => {
     dispatch(setState({ isTableLoading: true }));
 
     const {
-      data: { searchRestaurants },
+      data: { searchRestaurants, countRestaurants },
     } = await apolloClient.query({
       query: SEARCH_RESTAURANTS,
-      variables: { searchTerm, page, pageSize },
+      variables: { searchTerm, page: page * pageSize, pageSize },
       fetchPolicy: "network-only",
     });
 
     dispatch(
-      setState({ isTableLoading: false, restaurants: searchRestaurants || [] })
+      setState({
+        isTableLoading: false,
+        restaurants: searchRestaurants || [],
+        restaurantCount: countRestaurants,
+      })
     );
   };
 
@@ -44,6 +48,10 @@ const SearchBox = () => {
       onFilterApply();
     }
   }, [refetchData]);
+
+  useEffect(() => {
+    onFilterApply(page);
+  }, [page]);
 
   return (
     <div>

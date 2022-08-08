@@ -5,6 +5,7 @@ const defaultState = {
   isTableLoading: false,
   refetchData: false, // Used as a trigger to reload data
   restaurants: [],
+  restaurantCount: 0,
   // Filters
   searchText: "",
   page: 0,

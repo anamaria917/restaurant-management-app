@@ -37,7 +37,7 @@ const RestaurantsView = () => {
 
   const loadData = async () => {
     const {
-      data: { restaurants },
+      data: { restaurants, countRestaurants },
     } = await apolloClient.query({
       query: GET_RESTAURANTS,
       variables: { page, pageSize },
@@ -45,7 +45,11 @@ const RestaurantsView = () => {
     });
 
     dispatch(
-      setState({ isPageLoading: false, restaurants: restaurants || [] })
+      setState({
+        isPageLoading: false,
+        restaurants: restaurants || [],
+        restaurantCount: countRestaurants,
+      })
     );
   };
 

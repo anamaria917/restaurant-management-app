@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const GET_RESTAURANTS = gql`
-  query restaurants($page: Int!, $pageSize: Int!) {
+  query restaurants($page: Int!, $pageSize: Int!, $searchTerm: String) {
     restaurants(page: $page, pageSize: $pageSize) {
       id
       name
@@ -9,6 +9,7 @@ export const GET_RESTAURANTS = gql`
       email
       phone
     }
+    countRestaurants(searchTerm: $searchTerm)
   }
 `;
 
@@ -25,5 +26,6 @@ export const SEARCH_RESTAURANTS = gql`
       email
       phone
     }
+    countRestaurants(searchTerm: $searchTerm)
   }
 `;
