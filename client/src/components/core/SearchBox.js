@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { useApolloClient } from "@apollo/client";
@@ -12,7 +12,7 @@ const SearchBox = () => {
   const dispatch = useDispatch();
   const apolloClient = useApolloClient();
 
-  const { isTableLoading, page, pageSize } = useSelector(
+  const { isTableLoading, refetchData, page, pageSize } = useSelector(
     (state) => state.state.value
   );
 
@@ -37,6 +37,13 @@ const SearchBox = () => {
       setState({ isTableLoading: false, restaurants: searchRestaurants || [] })
     );
   };
+
+  useEffect(() => {
+    if (refetchData) {
+      dispatch(setState({ refetchData: false }));
+      onFilterApply();
+    }
+  }, [refetchData]);
 
   return (
     <div>

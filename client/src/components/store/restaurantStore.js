@@ -3,6 +3,7 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 const defaultState = {
   isPageLoading: true,
   isTableLoading: false,
+  refetchData: false, // Used as a trigger to reload data
   restaurants: [],
   // Filters
   searchText: "",
