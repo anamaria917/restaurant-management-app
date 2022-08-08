@@ -48,14 +48,16 @@ const RestaurantPagination = () => {
         <AddIcon />
       </FilledActionButton>
 
-      <Pagination
-        count={pageCount}
-        page={page + 1}
-        shape="rounded"
-        onChange={handlePaginationChange}
-        color={"primary"}
-        size="large"
-      />
+      {pageCount > 0 && (
+        <Pagination
+          count={pageCount}
+          page={page + 1}
+          shape="rounded"
+          onChange={handlePaginationChange}
+          color={"primary"}
+          size="large"
+        />
+      )}
 
       <RestaurantActionModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </div>
