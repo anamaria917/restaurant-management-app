@@ -56,7 +56,11 @@ const SearchBox = () => {
       data: { searchRestaurants, countRestaurants },
     } = await apolloClient.query({
       query: SEARCH_RESTAURANTS,
-      variables: { searchTerm: searchText, page: newPage * pageSize, pageSize },
+      variables: {
+        searchTerm: searchText,
+        page: newPage * pageSize,
+        pageSize,
+      },
       fetchPolicy: "no-cache",
     });
 
@@ -93,7 +97,10 @@ const SearchBox = () => {
       />
 
       <div className={classes.btnContainer}>
-        <FilledActionButton onClick={onFilterApply} disabled={isTableLoading}>
+        <FilledActionButton
+          onClick={() => onFilterApply(searchTerm, page)}
+          disabled={isTableLoading}
+        >
           <SearchIcon />
         </FilledActionButton>
       </div>
