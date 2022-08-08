@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { makeStyles } from "@mui/styles";
 import AddIcon from "@mui/icons-material/Add";
-import { IconButton, Pagination } from "@mui/material";
+import { Pagination } from "@mui/material";
 
 import RestaurantActionModal from "./modals/RestaurantActionModal";
 import { setState } from "../store/restaurantStore";
+import FilledActionButton from "./core/FilledActionButton";
 
 const useStyles = makeStyles({
   root: {
@@ -19,7 +20,6 @@ const useStyles = makeStyles({
   },
   actionButton: {
     color: "white !important",
-    backgroundColor: "#4c54ee",
     padding: "10px",
   },
 });
@@ -44,16 +44,17 @@ const RestaurantPagination = () => {
 
   return (
     <div className={classes.root}>
-      <IconButton onClick={() => setIsOpen(true)}>
-        <AddIcon className={classes.actionButton} />
-      </IconButton>
+      <FilledActionButton onClick={() => setIsOpen(true)}>
+        <AddIcon />
+      </FilledActionButton>
 
       <Pagination
         count={pageCount}
         page={page + 1}
-        variant="outlined"
         shape="rounded"
         onChange={handlePaginationChange}
+        color={"primary"}
+        size="large"
       />
 
       <RestaurantActionModal isOpen={isOpen} onClose={() => setIsOpen(false)} />

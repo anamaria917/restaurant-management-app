@@ -19,10 +19,16 @@ const useStyles = makeStyles({
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    height: "100%",
+    overflow: "auto",
   },
   gridContent: {
-    maxWidth: "50%",
+    maxWidth: "750px",
+    marginTop: "20px",
+    marginBottom: "20px",
+  },
+  restaurantsContent: {
+    marginTop: "42px !important",
+    marginBottom: "28px !important",
   },
 });
 
@@ -58,7 +64,7 @@ const RestaurantsView = () => {
   }, []);
 
   return (
-    <Paper className={classes.root}>
+    <Paper className={classes.root} elevation={0}>
       {isPageLoading ? (
         <Loader />
       ) : (
@@ -67,7 +73,7 @@ const RestaurantsView = () => {
             <SearchBox />
           </Grid>
 
-          <Grid item>
+          <Grid item className={classes.restaurantsContent}>
             <RestaurantRenderer />
           </Grid>
 

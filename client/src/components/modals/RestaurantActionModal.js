@@ -7,16 +7,16 @@ import CheckIcon from "@mui/icons-material/Check";
 import ClearIcon from "@mui/icons-material/Clear";
 
 import { makeStyles } from "@mui/styles";
-import IconButton from "@mui/material/IconButton";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import TextField from "@mui/material/TextField";
 
 import { CREATE_RESTAURANT, UPDATE_RESTAURANT } from "../database/mutations";
 import { setState } from "../../store/restaurantStore";
 import { EMAIL_REGEX } from "../../types/constants";
+import FilledActionButton from "../core/FilledActionButton";
+import StyledInput from "../core/StyledInput";
 
 const useStyles = makeStyles({
   root: {
@@ -26,7 +26,6 @@ const useStyles = makeStyles({
   },
   confirmActionBtn: {
     color: "white !important",
-    backgroundColor: "#4c54ee",
     padding: "10px",
     width: "88px !important",
   },
@@ -45,6 +44,9 @@ const useStyles = makeStyles({
     justifyContent: "flex-start",
     width: "100%",
     paddingLeft: "10px",
+  },
+  actionBtn: {
+    marginRight: "10px !important",
   },
 });
 
@@ -143,7 +145,8 @@ const RestaurantActionModal = ({ isOpen, onClose, restaurant }) => {
         <DialogTitle>{restaurant ? "Edit" : "Add"} restaurant</DialogTitle>
         <DialogContent className={classes.root}>
           {FIELDS_CONFIG.map((fieldConfig) => (
-            <TextField
+            <StyledInput
+              size="small"
               className={classes.field}
               key={fieldConfig.name}
               name={fieldConfig.name}
@@ -158,20 +161,23 @@ const RestaurantActionModal = ({ isOpen, onClose, restaurant }) => {
 
         <DialogActions>
           <div className={classes.actionsContent}>
-            <IconButton onClick={handleCreate} disabled={isOperationInProgress}>
-              {restaurant ? (
-                <CheckIcon className={classes.confirmActionBtn} />
-              ) : (
-                <AddIcon className={classes.confirmActionBtn} />
-              )}
-            </IconButton>
+            <FilledActionButton
+              onClick={handleCreate}
+              disabled={isOperationInProgress}
+              className={classes.actionBtn}
+            >
+              {restaurant ? <CheckIcon /> : <AddIcon />}
+            </FilledActionButton>
 
-            <IconButton
+            <FilledActionButton
+              width="44px"
+              bg="#f3f4f5"
+              textColor="#000000"
               onClick={() => onClose()}
               disabled={isOperationInProgress}
             >
-              <ClearIcon className={classes.clearActionBtn} />
-            </IconButton>
+              <ClearIcon />
+            </FilledActionButton>
           </div>
         </DialogActions>
       </Dialog>

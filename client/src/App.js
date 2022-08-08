@@ -1,4 +1,5 @@
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
+import { createTheme, ThemeProvider } from "@mui/material";
 import { Provider } from "react-redux";
 
 import "./App.css";
@@ -12,12 +13,22 @@ const client = new ApolloClient({
   cache: new InMemoryCache({ addTypename: false }),
 });
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#323cf0",
+    },
+  },
+});
+
 function App() {
   return (
     <ApolloProvider client={client}>
-      <Provider store={restaurantStore}>
-        <RestaurantsView />
-      </Provider>
+      <ThemeProvider theme={theme}>
+        <Provider store={restaurantStore}>
+          <RestaurantsView />
+        </Provider>
+      </ThemeProvider>
     </ApolloProvider>
   );
 }

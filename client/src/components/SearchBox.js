@@ -3,11 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { useApolloClient } from "@apollo/client";
 import { makeStyles } from "@mui/styles";
-import { IconButton, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
 import { SEARCH_RESTAURANTS } from "./database/queries";
 import { setState } from "../store/restaurantStore";
+import FilledActionButton from "./core/FilledActionButton";
+import StyledInput from "./core/StyledInput";
 
 const useStyles = makeStyles({
   root: {
@@ -16,14 +17,8 @@ const useStyles = makeStyles({
     width: "100%",
     alignItems: "center",
   },
-  searchButton: {
-    color: "white !important",
-    backgroundColor: "#4c54ee",
-    padding: "10px",
-    width: "88px !important",
-  },
-  searchBox: {
-    flex: 1,
+  btnContainer: {
+    marginLeft: "10px",
   },
 });
 
@@ -75,21 +70,20 @@ const SearchBox = () => {
 
   return (
     <div className={classes.root}>
-      <TextField
+      <StyledInput
+        size="small"
         variant="outlined"
         value={searchTerm}
         onChange={onChange}
         disabled={isTableLoading}
-        className={classes.searchBox}
+        placeholder="Search"
       />
 
-      <IconButton
-        onClick={onFilterApply}
-        variant="contained"
-        disabled={isTableLoading}
-      >
-        <SearchIcon className={classes.searchButton} />
-      </IconButton>
+      <div className={classes.btnContainer}>
+        <FilledActionButton onClick={onFilterApply} disabled={isTableLoading}>
+          <SearchIcon />
+        </FilledActionButton>
+      </div>
     </div>
   );
 };

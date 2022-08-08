@@ -1,15 +1,19 @@
 import React, { memo } from "react";
 
 import { makeStyles } from "@mui/styles";
-import { IconButton, Paper, Typography } from "@mui/material";
+import { Paper, Typography } from "@mui/material";
 import RemoveIcon from "@mui/icons-material/Remove";
+import FilledActionButton from "./FilledActionButton";
 
 const useStyles = makeStyles({
   root: {
+    maxHeight: "134px",
     cursor: "pointer",
-    padding: "15px",
+    paddingTop: "18px",
+    paddingLeft: "20px",
+    paddingRight: "20px",
+    paddingBottom: "12px",
     marginTop: "10px",
-    marginBottom: "10px",
     backgroundColor: "#f3f4f5 !important",
     color: "black !important",
     "&:hover": {
@@ -27,6 +31,7 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
+    marginTop: "30px",
   },
   name: {
     fontSize: "22px !important",
@@ -38,12 +43,11 @@ const useStyles = makeStyles({
     color: "inherit",
   },
   email: {
-    marginTop: "10px !important",
     color: "#323cf0", // TODO:
   },
   actionButton: {
     color: "white !important",
-    backgroundColor: "#4c54ee",
+    backgroundColor: "#4c54ee", // TODO:
     padding: "10px",
   },
 });
@@ -73,9 +77,9 @@ const RestaurantBox = ({ restaurant, onDelete, onEdit }) => {
           </Typography>
         </div>
 
-        <IconButton onClick={handleOnDelete}>
+        <FilledActionButton width="44px" onClick={handleOnDelete}>
           <RemoveIcon className={classes.actionButton} />
-        </IconButton>
+        </FilledActionButton>
       </div>
 
       <div className={classes.contactSection}>
