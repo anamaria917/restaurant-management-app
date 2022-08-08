@@ -10,7 +10,7 @@ const FilledActionButton = styled(Button)`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  color: ${(props) => props.textColor || "white"};
+  color: ${(props) => (props.bg ? "black" : "white")};
   height: 44px !important;
   border-radius: 0px;
   &:hover {

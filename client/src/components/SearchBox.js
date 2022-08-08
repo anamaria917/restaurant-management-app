@@ -35,16 +35,28 @@ const SearchBox = () => {
 
   const onChange = (event) => {
     setSearch(event.target.value);
+
+    // Bring again the data when the filter is cleared (no need for action click)
+    if (event.target.value === "") {
+      onFilterApply("");
+    }
   };
 
-  const onFilterApply = async (newPage = page) => {
+  const onKeyPress = (event) => {
+    // Bring data on Enter press
+    if (event.key === "Enter") {
+      onFilterApply();
+    }
+  };
+
+  const onFilterApply = async (searchText = searchTerm, newPage = page) => {
     dispatch(setState({ isTableLoading: true }));
 
     const {
       data: { searchRestaurants, countRestaurants },
     } = await apolloClient.query({
       query: SEARCH_RESTAURANTS,
-      variables: { searchTerm, page: page * pageSize, pageSize },
+      variables: { searchTerm: searchText, page: newPage * pageSize, pageSize },
       fetchPolicy: "network-only",
     });
 
@@ -65,7 +77,7 @@ const SearchBox = () => {
   }, [refetchData]);
 
   useEffect(() => {
-    onFilterApply(page);
+    onFilterApply(searchTerm, page);
   }, [page]);
 
   return (
@@ -75,6 +87,7 @@ const SearchBox = () => {
         variant="outlined"
         value={searchTerm}
         onChange={onChange}
+        onKeyPress={onKeyPress}
         disabled={isTableLoading}
         placeholder="Search"
       />

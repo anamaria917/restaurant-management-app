@@ -172,7 +172,6 @@ const RestaurantActionModal = ({ isOpen, onClose, restaurant }) => {
             <FilledActionButton
               width="44px"
               bg="#f3f4f5"
-              textColor="#000000"
               onClick={() => onClose()}
               disabled={isOperationInProgress}
             >

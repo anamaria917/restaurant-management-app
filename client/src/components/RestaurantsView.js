@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { useApolloClient } from "@apollo/client";
 import { makeStyles } from "@mui/styles";
-import { Grid, Paper } from "@mui/material";
+import { Grid, LinearProgress, Paper } from "@mui/material";
 
 import { GET_RESTAURANTS } from "./database/queries";
 import SearchBox from "./SearchBox";
@@ -30,6 +30,10 @@ const useStyles = makeStyles({
     marginTop: "42px !important",
     marginBottom: "28px !important",
   },
+  progressContent: {
+    height: "5px",
+    width: "100%",
+  },
 });
 
 const RestaurantsView = () => {
@@ -37,7 +41,7 @@ const RestaurantsView = () => {
   const dispatch = useDispatch();
   const apolloClient = useApolloClient();
 
-  const { isPageLoading, page, pageSize } = useSelector(
+  const { isPageLoading, isTableLoading, page, pageSize } = useSelector(
     (state) => state.state.value
   );
 
@@ -74,6 +78,10 @@ const RestaurantsView = () => {
           </Grid>
 
           <Grid item className={classes.restaurantsContent}>
+            <div className={classes.progressContent}>
+              {isTableLoading && <LinearProgress />}
+            </div>
+
             <RestaurantRenderer />
           </Grid>
 
