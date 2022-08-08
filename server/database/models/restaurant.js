@@ -1,8 +1,8 @@
 import { DataTypes } from "sequelize";
 import DatabaseHelper from "../../helpers/databaseHelper";
 
-export const Flow = DatabaseHelper.db.define(
-  "flow",
+export const Restaurant = DatabaseHelper.db.define(
+  "restaurant",
   {
     id: {
       type: DataTypes.BIGINT,
