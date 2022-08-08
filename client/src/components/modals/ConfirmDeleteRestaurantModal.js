@@ -1,15 +1,33 @@
 import React, { useState } from "react";
 import { useApolloClient } from "@apollo/client";
 
-import Button from "@mui/material/Button";
+import { makeStyles } from "@mui/styles";
+import CheckIcon from "@mui/icons-material/Check";
+import ClearIcon from "@mui/icons-material/Clear";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+
 import { DELETE_RESTAURANT } from "../database/mutations";
+import FilledActionButton from "../core/FilledActionButton";
+
+const useStyles = makeStyles({
+  actionsContent: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    width: "100%",
+    paddingLeft: "10px",
+  },
+  actionBtn: {
+    marginRight: "10px !important",
+  },
+});
 
 const ConfirmDeleteRestaurantModal = ({ isOpen, onClose, id }) => {
+  const classes = useStyles();
   const apolloClient = useApolloClient();
   const [isOperationInProgress, setOperationInProgress] = useState(false);
 
@@ -40,12 +58,24 @@ const ConfirmDeleteRestaurantModal = ({ isOpen, onClose, id }) => {
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => onClose()} disabled={isOperationInProgress}>
-          Cancel
-        </Button>
-        <Button onClick={onConfirm} disabled={isOperationInProgress}>
-          Confirm
-        </Button>
+        <div className={classes.actionsContent}>
+          <FilledActionButton
+            onClick={onConfirm}
+            disabled={isOperationInProgress}
+            className={classes.actionBtn}
+          >
+            <CheckIcon />
+          </FilledActionButton>
+
+          <FilledActionButton
+            width="44px"
+            bg="#f3f4f5"
+            onClick={() => onClose()}
+            disabled={isOperationInProgress}
+          >
+            <ClearIcon />
+          </FilledActionButton>
+        </div>
       </DialogActions>
     </Dialog>
   );

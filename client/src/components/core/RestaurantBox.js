@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 
 import { makeStyles } from "@mui/styles";
 import { Paper, Typography } from "@mui/material";
@@ -54,6 +54,7 @@ const useStyles = makeStyles({
 
 const RestaurantBox = ({ restaurant, onDelete, onEdit }) => {
   const classes = useStyles();
+  const [isHovered, setIsHovered] = useState(false);
 
   const handleOnDelete = (event) => {
     event.preventDefault();
@@ -66,6 +67,8 @@ const RestaurantBox = ({ restaurant, onDelete, onEdit }) => {
       className={classes.root}
       elevation={0}
       onClick={() => onEdit(restaurant.id)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       <div elevation={0} className={classes.nameSection}>
         <div>
@@ -77,13 +80,24 @@ const RestaurantBox = ({ restaurant, onDelete, onEdit }) => {
           </Typography>
         </div>
 
-        <FilledActionButton width="44px" onClick={handleOnDelete}>
-          <RemoveIcon className={classes.actionButton} />
-        </FilledActionButton>
+        {isHovered && (
+          <FilledActionButton
+            width="44px"
+            onClick={handleOnDelete}
+            id="actionsContent"
+          >
+            <RemoveIcon className={classes.actionButton} />
+          </FilledActionButton>
+        )}
       </div>
 
       <div className={classes.contactSection}>
-        <Typography className={classes.email}>
+        <Typography
+          className={classes.email}
+          sx={{
+            color: isHovered ? "inherit" : "auto",
+          }}
+        >
           {restaurant.email || "-"}
         </Typography>
         <Typography>{restaurant.phone || "-"}</Typography>
