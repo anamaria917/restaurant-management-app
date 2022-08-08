@@ -14,7 +14,6 @@ const ConfirmDeleteRestaurantModal = ({ isOpen, onClose, id }) => {
   const [isOperationInProgress, setOperationInProgress] = useState(false);
 
   const onConfirm = async () => {
-    console.log("here", id);
     setOperationInProgress(true);
 
     apolloClient
@@ -27,7 +26,6 @@ const ConfirmDeleteRestaurantModal = ({ isOpen, onClose, id }) => {
         setOperationInProgress(false);
       })
       .catch((err) => {
-        console.log({ err });
         setOperationInProgress(false);
         // TODO: Add notification
       });

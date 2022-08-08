@@ -1,12 +1,12 @@
 import React, { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { makeStyles } from "@mui/styles";
 import { useApolloClient } from "@apollo/client";
+import { makeStyles } from "@mui/styles";
 import { IconButton, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
-import { SEARCH_RESTAURANTS } from "../database/queries";
+import { SEARCH_RESTAURANTS } from "./database/queries";
 import { setState } from "../store/restaurantStore";
 
 const useStyles = makeStyles({

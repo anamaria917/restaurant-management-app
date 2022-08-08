@@ -5,12 +5,12 @@ import { useApolloClient } from "@apollo/client";
 import { makeStyles } from "@mui/styles";
 import { Grid, Paper } from "@mui/material";
 
-import SearchBox from "./core/SearchBox";
+import { GET_RESTAURANTS } from "./database/queries";
+import SearchBox from "./SearchBox";
+import Loader from "./core/Loader";
 import RestaurantRenderer from "./RestaurantRenderer";
 import RestaurantPagination from "./RestaurantPagination";
-import Loader from "./core/Loader";
-import { GET_RESTAURANTS } from "./database/queries";
-import { setState } from "./store/restaurantStore";
+import { setState } from "../store/restaurantStore";
 
 const useStyles = makeStyles({
   root: {

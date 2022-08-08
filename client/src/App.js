@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 
 import "./App.css";
 import RestaurantsView from "./components/RestaurantsView";
-import { restaurantStore } from "./components/store/restaurantStore";
+import { restaurantStore } from "./store/restaurantStore";
 
 // Init apollo client
 const client = new ApolloClient({

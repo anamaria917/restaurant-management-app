@@ -6,7 +6,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { IconButton, Pagination } from "@mui/material";
 
 import RestaurantActionModal from "./modals/RestaurantActionModal";
-import { setState } from "./store/restaurantStore";
+import { setState } from "../store/restaurantStore";
 
 const useStyles = makeStyles({
   root: {

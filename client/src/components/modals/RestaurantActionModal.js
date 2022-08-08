@@ -15,8 +15,8 @@ import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
 
 import { CREATE_RESTAURANT, UPDATE_RESTAURANT } from "../database/mutations";
-import { setState } from "../store/restaurantStore";
-import { EMAIL_REGEX } from "../types/constants";
+import { setState } from "../../store/restaurantStore";
+import { EMAIL_REGEX } from "../../types/constants";
 
 const useStyles = makeStyles({
   root: {

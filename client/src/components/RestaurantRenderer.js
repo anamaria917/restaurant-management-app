@@ -1,18 +1,15 @@
-import { LinearProgress } from "@mui/material";
 import React, { memo, useCallback, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import RestaurantBox from "./core/RestaurantBox";
 import RestaurantActionModal from "./modals/RestaurantActionModal";
 import ConfirmDeleteRestaurantModal from "./modals/ConfirmDeleteRestaurantModal";
-import { setState } from "./store/restaurantStore";
+import { setState } from "../store/restaurantStore";
 
 const RestaurantRenderer = () => {
   const dispatch = useDispatch();
 
-  const { isTableLoading, restaurants } = useSelector(
-    (state) => state.state.value
-  );
+  const { restaurants } = useSelector((state) => state.state.value);
   const [deletableId, setDeletableId] = useState(null);
   const [editableId, setEditableId] = useState(null);
 
@@ -44,8 +41,6 @@ const RestaurantRenderer = () => {
 
   return (
     <div>
-      <div>{isTableLoading && <LinearProgress />}</div>
-
       {restaurants?.map((restaurant, index) => (
         <RestaurantBox
           key={`${restaurant.id}-${index}`}
