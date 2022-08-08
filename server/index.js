@@ -1,13 +1,27 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
+import DatabaseHelper from "./helpers/databaseHelper";
 
-const app = express();
+// Initialize database
+DatabaseHelper.initialize();
 
-app.get("/test-connection", function (req, res) {
+import apolloServer from "./database/apolloServer";
+
+const server = express();
+
+server.get("/test-connection", function (req, res) {
   res.send("Hello! You are all set!");
 });
 
-const server = app.listen(3001, function () {
-  const port = server.address().port;
+// Start and attach apollo server to express server
+apolloServer.start().then(() => apolloServer.applyMiddleware({ app: server }));
 
-  console.log(`Server started on PORT ${port}`);
-});
+DatabaseHelper.initialized()
+  .then(() => {
+    server.listen(process.env.SERVER_PORT, process.env.SERVER_URL, () => {
+      console.log(`Server started on PORT ${process.env.SERVER_PORT}`);
+    });
+  })
+  .catch((err) => console.log(err));
