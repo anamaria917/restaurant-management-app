@@ -3,10 +3,10 @@ import React from "react";
 import { makeStyles } from "@mui/styles";
 import { IconButton, Paper, Typography } from "@mui/material";
 import RemoveIcon from "@mui/icons-material/Remove";
-import EditIcon from "@mui/icons-material/Edit";
 
 const useStyles = makeStyles({
   root: {
+    cursor: "pointer",
     padding: "15px",
     marginTop: "10px",
     marginBottom: "10px",
@@ -46,16 +46,23 @@ const useStyles = makeStyles({
     backgroundColor: "#4c54ee",
     padding: "10px",
   },
-  actionsContainer: {
-    visibility: "visible", // TODO:
-  },
 });
 
 const RestaurantBox = ({ restaurant, onDelete, onEdit }) => {
   const classes = useStyles();
 
+  const handleOnDelete = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    onDelete(restaurant.id);
+  };
+
   return (
-    <Paper className={classes.root} elevation={0}>
+    <Paper
+      className={classes.root}
+      elevation={0}
+      onClick={() => onEdit(restaurant.id)}
+    >
       <div elevation={0} className={classes.nameSection}>
         <div>
           <Typography className={classes.name}>
@@ -66,15 +73,9 @@ const RestaurantBox = ({ restaurant, onDelete, onEdit }) => {
           </Typography>
         </div>
 
-        <div className={classes.actionsContainer}>
-          <IconButton onClick={() => onEdit(restaurant.id)}>
-            <EditIcon className={classes.actionButton} />
-          </IconButton>
-
-          <IconButton onClick={() => onDelete(restaurant.id)}>
-            <RemoveIcon className={classes.actionButton} />
-          </IconButton>
-        </div>
+        <IconButton onClick={handleOnDelete}>
+          <RemoveIcon className={classes.actionButton} />
+        </IconButton>
       </div>
 
       <div className={classes.contactSection}>
